@@ -1,0 +1,22 @@
+web:
+  build: .
+  expose:
+    - "80"
+  volumes:
+    - ./site:/app
+  environment:
+    VIRTUAL_HOST: example.app
+    ALLOW_OVERRIDE: true
+  restart: always
+  container_name: "example"
+  links:
+    - db
+db:
+  image: "mysql:5.6"
+  environment:
+    MYSQL_DATABASE: "site"
+    MYSQL_ROOT_PASSWORD: "123456"
+  volumes:
+    - ./mysql:/var/lib/mysql
+  restart: always
+  container_name: "example_db"
